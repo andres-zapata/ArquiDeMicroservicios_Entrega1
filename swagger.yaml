@@ -24,6 +24,8 @@ tags:
   externalDocs:
     description: "Find out more about our store"
     url: "http://swagger.io"
+- name: "profile"
+  description: "Operaciones relacionadas a perfil de usuarios"
 schemes:
 - "https"
 - "http"
@@ -85,43 +87,116 @@ paths:
       - petstore_auth:
         - "write:pets"
         - "read:pets"
-  /pet/findByStatus:
+  /profile:
     get:
       tags:
-      - "pet"
-      summary: "Finds Pets by status"
-      description: "Multiple status values can be provided with comma separated strings"
-      operationId: "findPetsByStatus"
+      - "perfil"
+      summary: "Traer elementos del perfil de usuario"
+      description: "Trae todos los elementos asociados a la vista de perfil"
+      operationId: "getDataProfile"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
-      - name: "status"
+      - name: "profilePhoto"
         in: "query"
-        description: "Status values that need to be considered for filter"
+        description: "Trae Foto de perfil asociada"
         required: true
         type: "array"
         items:
           type: "string"
-          enum:
-          - "available"
-          - "pending"
-          - "sold"
-          default: "available"
-        collectionFormat: "multi"
       responses:
         "200":
-          description: "successful operation"
+          description: "OK"
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Pet"
         "400":
-          description: "Invalid status value"
-      security:
-      - petstore_auth:
-        - "write:pets"
-        - "read:pets"
+          description: "Foto no encotrada"
+  /profile/{id}:
+    get:
+      tags:
+        - "profile"
+        summary: "Encontrar un perfil a partir de su id de usuario"
+        description: ""
+        operationId: "getProfileById"
+        produces:
+        - "application/xml"
+        - "application/json"
+        parameters:
+        - name: "id"
+          in: "path"
+          description: "Id de perfil necesaria"
+          required: true
+          type: "integer"
+          maximum: 10.0
+          minimum: 1.0
+          format: "int64"
+        responses:
+          "200":
+            description: "Ok"
+            schema:
+              $ref: "#/definitions/User"
+          "400":
+            description: "ID incorrecto"
+          "404":
+            description: "Perfil no encontrado"
+    put:
+      tags:
+      - "user"
+      summary: "Actualizar perfil usuario"
+      description: ""
+      operationId: "updateProfileUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id del Perfil usuario para modificarlo"
+        required: true
+        type: "integer"
+        maximum: 10.0
+        minimum: 1.0
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Campos a modificar"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "400":
+          description: "id no encontrado"
+        "404":
+          description: "perfil no existe"
+        "405":
+          description: "Error"
+    delete:
+      tags:
+        - "Profile"
+      summary: "Eliminar foto de Perfil"
+      description: ""
+      operationId: "deleteProfileUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id Foto de perfil a eliminar"
+        required: true
+        type: "integer"
+        minimum: 1.0
+        format: "int64"
+      responses:
+        "400":
+          description: "ID invalida"
+        "404":
+          description: "Usuario no econtrado"
+        "204":
+          description: "Eliminado correctamente"
+
   /pet/findByTags:
     get:
       tags:
@@ -587,7 +662,7 @@ definitions:
         type: "string"
     xml:
       name: "Tag"
-  Pet:
+  Profile:
     type: "object"
     required:
     - "name"
@@ -596,34 +671,11 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      category:
-        $ref: "#/definitions/Category"
       name:
-        type: "string"
-        example: "doggie"
-      photoUrls:
-        type: "array"
-        xml:
-          name: "photoUrl"
-          wrapped: true
-        items:
-          type: "string"
-      tags:
-        type: "array"
-        xml:
-          name: "tag"
-          wrapped: true
-        items:
-          $ref: "#/definitions/Tag"
-      status:
-        type: "string"
-        description: "pet status in the store"
-        enum:
-        - "available"
-        - "pending"
-        - "sold"
+        type: "object"
+        example: "user"
     xml:
-      name: "Pet"
+      name: "Profile"
   ApiResponse:
     type: "object"
     properties:

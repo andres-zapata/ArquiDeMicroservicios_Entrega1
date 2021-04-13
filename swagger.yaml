@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "This is a sample server Petstore server.Hola.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
   version: "1.0.0"
   title: "Swagger Petstore"
   termsOfService: "http://swagger.io/terms/"
@@ -20,10 +20,12 @@ tags:
 - name: "store"
   description: "Access to Petstore orders"
 - name: "user"
-  description: "Operaciones relacionadas a los usuarios"
+  description: "Operations about user"
   externalDocs:
     description: "Find out more about our store"
     url: "http://swagger.io"
+- name: "listaDeReproduccion"
+  description: "Operaciones relacionadas a la lista de reproduccion"
 schemes:
 - "https"
 - "http"
@@ -31,10 +33,59 @@ paths:
   /listaDeReproduccion:
     post:
       tags:
-      - "addVideoToPlaylist"
-      summary: "Add a new video to the playlist"
+      - "listaDeReproduccion"
+      summary: "añade "
       description: ""
-      operationId: "addVideoToPlaylist"
+      operationId: "creaPlaylist"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "nombre"
+        in: "body"
+        description: "se crea la lista de reproduccion"
+        required: true
+        schema:
+          $ref: "#/definitions/Video1"
+      responses:
+        "405":
+          description: "Campos invalidos"
+        "200":
+          description: "La lista de reproduccion a sido añadida correctamente"
+    delete:
+      tags:
+      - "listaDeReproduccion"
+      summary: "Borrar un video a partir de su id"
+      description: ""
+      operationId: "deletePlaylist"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Borra lista de reproduccion"
+        required: true
+        schema:
+          $ref: "#/definitions/Video1"
+      responses:
+        "200":
+          description: "Operacion exitosa"
+          schema:
+            $ref: "#/definitions/Video1"
+        "400":
+          description: "ID incorrecto"
+        "404":
+          description: "Video no encontrado"
+    get:
+      tags:
+      - "listaDeReproduccion"
+      summary: "añade "
+      description: ""
+      operationId: "getPlaylist"
       consumes:
       - "application/json"
       - "application/xml"
@@ -44,13 +95,66 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Video object that needs to be added to the store"
+        description: "Obtener la lista de reproduccion"
         required: true
         schema:
           $ref: "#/definitions/Video1"
       responses:
         "405":
-          description: "Invalid input"
+          description: "Campos invalidos"
+        "200":
+          description: "El usuario a sido creado correctamente"
+  /listaDeReproduccion/{id}/:
+    delete:
+      tags:
+      - "listaDeReproduccion"
+      summary: "Borrar un video a partir de su id"
+      description: "Para una respuesta correcta se necesita el id del video a encontrar"
+      operationId: "getVideoById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID del usuario es necesario para la busqueda"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "Operacion exitosa"
+          schema:
+            $ref: "#/definitions/Video1"
+        "400":
+          description: "ID incorrecto"
+        "404":
+          description: "Video no encontrado"
+    post:
+      tags:
+      - "listaDeReproduccion"
+      summary: "añade "
+      description: ""
+      operationId: "addVideoToPlaylist"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID del usuario es necesario para la busqueda"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "405":
+          description: "Campos invalidos"
+        "200":
+          description: "El video a sido añadido correctamente"
+
   /pet:
     post:
       tags:
@@ -405,127 +509,188 @@ paths:
     post:
       tags:
       - "user"
-      summary: "Añadir un nuevo usuario"
-      description: ""
-      operationId: "addUser"
-      consumes:
-      - "application/json"
-      - "application/xml"
+      summary: "Create user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
         name: "body"
-        description: "Los usuarios deben ser almacenados en la bd"
+        description: "Created user object"
         required: true
         schema:
           $ref: "#/definitions/User"
       responses:
-        "405":
-          description: "Campos invalidos"
-        "200":
-          description: "El usuario a sido creado correctamente"
-    get:
+        default:
+          description: "successful operation"
+  /user/createWithArray:
+    post:
       tags:
       - "user"
-      summary: "Listar todos los usuarios"
+      summary: "Creates list of users with given input array"
       description: ""
-      operationId: "getUsers"
-      consumes:
-      - "application/json"
-      - "application/xml"
-      produces:
-      - "application/xml"
-      - "application/json"
-      responses:
-        "400":
-          description: "Solicitud incorrecta"
-        "200":
-          description: "Listado exitoso"
-  /user/{id}/:
-    get:
-      tags:
-      - "user"
-      summary: "Encontrar un usuario a partir de su id"
-      description: "Para una respuesta correcta se necesita el id del usuario a encontrar"
-      operationId: "getUserById"
+      operationId: "createUsersWithArrayInput"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "id"
-        in: "path"
-        description: "ID del usuario es necesario para la busqueda"
+      - in: "body"
+        name: "body"
+        description: "List of user object"
         required: true
-        type: "integer"
-        maximum: 10.0
-        minimum: 1.0
-        format: "int64"
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+  /user/createWithList:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithListInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The user name for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
       responses:
         "200":
-          description: "Operacion exitosa"
+          description: "successful operation"
+          schema:
+            type: "string"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+        "400":
+          description: "Invalid username/password supplied"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "getUserByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be fetched. Use user1 for testing. "
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
           schema:
             $ref: "#/definitions/User"
         "400":
-          description: "ID incorrecto"
+          description: "Invalid username supplied"
         "404":
-          description: "Usuario no encontrado"
+          description: "User not found"
     put:
       tags:
       - "user"
-      summary: "Actulizar usuarios exitestentes"
-      description: "Para una respuesta correcta se necesita el id del usuario a modificar"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
       operationId: "updateUser"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "id"
+      - name: "username"
         in: "path"
-        description: "ID del usuario para modificarlo"
+        description: "name that need to be updated"
         required: true
-        type: "integer"
-        maximum: 10.0
-        minimum: 1.0
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
-        description: "Campos a modificar"
+        description: "Updated user object"
         required: true
         schema:
           $ref: "#/definitions/User"
       responses:
         "400":
-          description: "Id de usuario no entregado"
+          description: "Invalid user supplied"
         "404":
-          description: "El usuario no existe"
-        "405":
-          description: "Solicitud Erronea"
+          description: "User not found"
     delete:
       tags:
-        - "user"
-      summary: "Eliminar un usuario a traves de su ID"
-      description: "Para una respuesta exitosa, provea un ID existente"
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
       operationId: "deleteUser"
       produces:
       - "application/xml"
       - "application/json"
       parameters:
-      - name: "id"
+      - name: "username"
         in: "path"
-        description: "ID del usurario que sera borrado"
+        description: "The name that needs to be deleted"
         required: true
-        type: "integer"
-        minimum: 1.0
-        format: "int64"
+        type: "string"
       responses:
         "400":
-          description: "ID invalida"
+          description: "Invalid username supplied"
         "404":
-          description: "Usuario no econtrado"
-        "204":
-          description: "Eliminado correctamente"
+          description: "User not found"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"

@@ -8,7 +8,7 @@ public interface VideoService {
 
 	public VideoDTO createVideo(VideoDTO video);
 	public boolean removeVideo(String idvideo);
-	public List<VideoDTO> getVideo();
+	public List<VideoDTO> getVideos();
 	public VideoDTO updateVideo(VideoDTO video);
 	public VideoDTO getVideo(String idVideo);
 

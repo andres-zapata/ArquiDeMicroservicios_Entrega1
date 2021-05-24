@@ -18,7 +18,7 @@ public class VideoEntity {
     @Id
     @Column(name = "ID", nullable = false)
     @GeneratedValue
-    private UUID  id;		
+    private UUID  videoId;		
 
     @Column(name = "NOMBRE", nullable = false)
     private String name;

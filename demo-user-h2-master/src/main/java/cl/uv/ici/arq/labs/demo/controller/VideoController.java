@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cl.uv.ici.arq.labs.demo.config.CustomConfig;
 import cl.uv.ici.arq.labs.demo.dtos.UserDTO;
+import cl.uv.ici.arq.labs.demo.dtos.VideoDTO;
 import cl.uv.ici.arq.labs.demo.service.UserService;
+import cl.uv.ici.arq.labs.demo.service.VideoService;
 
 @RestController
-@RequestMapping("/video")
+@RequestMapping("/videos")
 
 public class VideoController {
 
@@ -59,9 +61,5 @@ public class VideoController {
 	}
 	
 	
-	@GetMapping("/custom")
-	public ResponseEntity<List<VideoDTO>> findBylastName(@RequestParam String lastName) {
-		return new ResponseEntity<>(service.findBylastName(lastName), HttpStatus.OK);
-	}
 
 }

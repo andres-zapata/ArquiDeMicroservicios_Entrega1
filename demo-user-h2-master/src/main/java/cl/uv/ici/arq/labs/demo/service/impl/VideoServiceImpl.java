@@ -1,4 +1,12 @@
+package cl.uv.ici.arq.labs.demo.service.impl;
 
+
+import java.util.List;
+import java.util.UUID;
+
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import cl.uv.ici.arq.labs.demo.dtos.VideoDTO;
 import cl.uv.ici.arq.labs.demo.entities.VideoEntity;
 import cl.uv.ici.arq.labs.demo.mapper.MapperUtils;
@@ -15,8 +23,7 @@ public class VideoServiceImpl implements VideoService {
 
 	private VideoEntity mapVideoEntity(VideoDTO videoDTO) {
 		VideoEntity video= new VideoEntity();		
-		video.setFirstName(videoDTO.getFirstName());
-		video.setLastName(videoDTO.getLastName());
+		video.setName(videoDTO.getName());
 		return video;
 	}
 	
@@ -52,15 +59,10 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<VideoDTO> getVideo() {
-		 return (List<VideoDTO>) MapperUtils.mapAsList(videoRepository.getAll(), new TypeToken<List<VideoDTO>>() {}.getType());
-		 //return (List<videoDTO>) MapperUtils.mapAsList(videoRepository.findAll(), new TypeToken<List<videoDTO>>() {}.getType());
+	public List<VideoDTO> getVideos() {
+		 return (List<VideoDTO>) MapperUtils.mapAsList(videoRepository.findAll(), new TypeToken<List<VideoDTO>>() {}.getType());
 	}
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<VideoDTO> findBylastName(String lastName) {
-		 return (List<VideoDTO>) MapperUtils.mapAsList(videoRepository.findByLastName(lastName), new TypeToken<List<VideoDTO>>() {}.getType());
-	}
+
 
 }

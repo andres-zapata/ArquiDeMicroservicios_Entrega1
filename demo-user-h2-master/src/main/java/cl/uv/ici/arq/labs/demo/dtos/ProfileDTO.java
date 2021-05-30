@@ -3,6 +3,7 @@ package cl.uv.ici.arq.labs.demo.dtos;
 import cl.uv.ici.arq.labs.demo.entities.UserEntity;
 import lombok.Data;
 
+
 @Data
 public class ProfileDTO {
 

@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cl.uv.ici.arq.labs.demo.dtos.PlaylistDTO;
+import cl.uv.ici.arq.labs.demo.dtos.VideoDTO;
 import cl.uv.ici.arq.labs.demo.entities.PlaylistEntity;
 import cl.uv.ici.arq.labs.demo.mapper.MapperUtils;
 import cl.uv.ici.arq.labs.demo.repository.PlaylistRepository;
+import cl.uv.ici.arq.labs.demo.repository.VideoRepository;
 import cl.uv.ici.arq.labs.demo.service.PlaylistService;
 
 @Service("playlistService")
@@ -20,6 +22,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
 	@Autowired
 	PlaylistRepository playlistRepository;
+	VideoRepository videoRepository;
 		
 	private PlaylistEntity mapPlaylistEntity(PlaylistDTO playlistDTO) {
 		PlaylistEntity playlist= new PlaylistEntity();		
@@ -50,9 +53,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	}
 
 	@Override
-	public boolean addVideo(@Valid String videoId) {
-		boolean add=true;		
-		this.playlistRepository.save(videoId);		
+	public boolean saveVideo(@Valid String videoId, @Valid String playListId) {
+		boolean add=true;	
+		this.playlistRepository.addVideo(playListId, videoId);		
 		return add;
 	}
 

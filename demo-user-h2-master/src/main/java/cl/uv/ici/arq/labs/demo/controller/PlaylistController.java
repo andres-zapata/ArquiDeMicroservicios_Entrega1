@@ -54,9 +54,9 @@ public class PlaylistController {
 		return new ResponseEntity<>(service.getPlaylist(playlistId), HttpStatus.OK);
 	}
 	
-	@PostMapping
-	public ResponseEntity<PlaylistDTO> addVideo(@RequestBody @Valid String videoId) {
-		return new ResponseEntity<>(service.addVideo(videoId), HttpStatus.OK);
+	@PostMapping("/{playlistId}/{videoId}")
+	public ResponseEntity<PlaylistDTO> addVideo(@PathVariable String videoId, @PathVariable String playListId) {
+		return new ResponseEntity<>(service.saveVideo(videoId, playListId), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{videoId}")

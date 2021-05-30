@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cl.uv.ici.arq.labs.demo.dtos.UserDTO;
+
 import lombok.Data;
 
 @Data
@@ -26,6 +26,6 @@ public class PlaylistEntity {
     private String name;
 
     @Column(name = "LISTA", nullable = false)
-    private ArrayList<VideoEntity> videoList;
+    private ArrayList<String> videoList;
 
 }

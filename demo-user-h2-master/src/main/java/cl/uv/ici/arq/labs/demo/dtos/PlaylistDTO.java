@@ -10,5 +10,5 @@ public class PlaylistDTO {
 
 	private String playlistId;
 	private String name;
-	private ArrayList<VideoEntity> videoList;	
+	private ArrayList<String> videoList;	
 }

@@ -8,18 +8,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import cl.uv.ici.arq.labs.demo.entities.UserEntity;
+import cl.uv.ici.arq.labs.demo.entities.PlaylistEntity;
 
 
 @Repository("playlistRepository")
-public interface PlaylistRepository extends JpaRepository<UserEntity, UUID> {
+public interface PlaylistRepository extends JpaRepository<PlaylistEntity, UUID> {
 
     @Query(value = "SELECT * FROM PLAYLIST", nativeQuery = true)
-    public List<UserEntity> getAll();
+    public List<PlaylistEntity> getAll();
     
     @Query(value = "SELECT * FROM PLAYLIST WHERE videoId LIKE CONCAT('%',:id,'%')", nativeQuery = true)
-    public List<UserEntity> findById(String id);
+    public List<PlaylistEntity> findById(String id);
 
-	public void addVideo(UUID fromString);
+    @Query(value = "INSERT INTO PLAYLIST (LISTA) VALUES (videoId) WHERE PLAYLIST.playlistId = playListId", nativeQuery = true)
+    public List<PlaylistEntity> addVideo(String playListId, String videoId);
 
 }

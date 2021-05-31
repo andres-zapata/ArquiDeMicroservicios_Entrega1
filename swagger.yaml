@@ -12,11 +12,11 @@ info:
 host: "youtube.swagger.io"
 basePath: "/v2"
 paths:
-  /listaDeReproduccion:
+  /playlist:
     post:
       tags:
-      - "listaDeReproduccion"
-      summary: "añade "
+      - "playlist"
+      summary: "crea playlist "
       description: ""
       operationId: "creaPlaylist"
       consumes:
@@ -31,7 +31,7 @@ paths:
         description: "se crea la lista de reproduccion"
         required: true
         schema:
-          $ref: "#/definitions/ReproductionList"
+          $ref: "#/definitions/Playlist"
       responses:
         "405":
           description: "Campos invalidos"
@@ -39,8 +39,8 @@ paths:
           description: "La lista de reproduccion a sido añadida correctamente"
     delete:
       tags:
-      - "listaDeReproduccion"
-      summary: "Borrar un video a partir de su id"
+      - "playlist"
+      summary: "Borrar playlist"
       description: ""
       operationId: "deletePlaylist"
       produces:
@@ -64,8 +64,8 @@ paths:
           description: "Video no encontrado"
     get:
       tags:
-      - "listaDeReproduccion"
-      summary: "añade "
+      - "playlist"
+      summary: "trae la playlist"
       description: ""
       operationId: "getPlaylist"
       consumes:
@@ -86,13 +86,13 @@ paths:
           description: "Campos invalidos"
         "200":
           description: "El usuario a sido creado correctamente"
-  /listaDeReproduccion/{id}/:
+  /playlist/{id}/:
     delete:
       tags:
-      - "listaDeReproduccion"
+      - "playlist"
       summary: "Borrar un video a partir de su id"
       description: "Para una respuesta correcta se necesita el id del video a encontrar"
-      operationId: "getVideoById"
+      operationId: "deleteVideoById"
       produces:
       - "application/xml"
       - "application/json"
@@ -114,8 +114,8 @@ paths:
           description: "Video no encontrado"
     post:
       tags:
-      - "listaDeReproduccion"
-      summary: "añade "
+      - "playlist"
+      summary: "añade video by id "
       description: ""
       operationId: "addVideoToPlaylist"
       consumes:
@@ -554,16 +554,16 @@ definitions:
         type: "string"
       user:
         $ref: "#/definitions/User"
-      reproductionList:
+      Playlist:
         type: "array"
         xml:
-          name: "reproductionList"
+          name: "Playlist"
           wrapped: true
         items:
-          $ref: "#/definitions/ReproductionList"
+          $ref: "#/definitions/Playlist"
     xml:
       name: "Profile"
-  ReproductionList:
+  Playlist:
     type: "object"
     required:
     - "name"

@@ -11,7 +11,7 @@ public interface PlaylistService {
 	public PlaylistDTO createPlaylist(@Valid PlaylistDTO playlistDTO);
 	public boolean deletePlaylist(String playlistId);
 	public PlaylistDTO getPlaylist(String playlistId);
-	public boolean addVideo(@Valid String videoId);
+	public boolean saveVideo(@Valid String videoId, @Valid String playListId);
 	public boolean deleteVideo(String videoId);
 
 }

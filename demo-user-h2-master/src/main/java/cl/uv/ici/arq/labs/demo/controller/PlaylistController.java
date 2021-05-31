@@ -43,25 +43,31 @@ public class PlaylistController {
 	public ResponseEntity<PlaylistDTO> createPlaylist(@RequestBody @Valid PlaylistDTO playlistDTO) {
 		return new ResponseEntity<>(service.createPlaylist(playlistDTO), HttpStatus.CREATED);
 	}
-	
+
+	/*
 	@DeleteMapping("/{playlistId}")
 	public ResponseEntity<PlaylistDTO> deletePlaylist(@PathVariable String playlistId) {
 		return new ResponseEntity<>(service.deletePlaylist(playlistId), HttpStatus.OK);
 	}
+	*/
 	
 	@GetMapping("/{profileId}")
 	public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable String playlistId) {
 		return new ResponseEntity<>(service.getPlaylist(playlistId), HttpStatus.OK);
 	}
 	
-	@PostMapping
-	public ResponseEntity<PlaylistDTO> addVideo(@RequestBody @Valid String videoId) {
-		return new ResponseEntity<>(service.addVideo(videoId), HttpStatus.OK);
+	/*
+	@PostMapping("/{playlistId}/{videoId}")
+	public ResponseEntity<PlaylistDTO> addVideo(@PathVariable String videoId, @PathVariable String playListId) {
+		return new ResponseEntity<>(service.saveVideo(videoId, playListId), HttpStatus.OK);
 	}
+	*/
 	
+	/*
 	@DeleteMapping("/{videoId}")
 	public ResponseEntity<PlaylistDTO> deleteVideo(@PathVariable String videoId) {
 		return new ResponseEntity<>(service.deleteVideo(videoId), HttpStatus.OK);
 	}
-
+	*/
+	
 }

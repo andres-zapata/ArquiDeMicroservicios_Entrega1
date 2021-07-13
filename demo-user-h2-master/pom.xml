@@ -15,6 +15,17 @@
 	<name>demo-user-h2</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<spring-cloud.version>Hoxton.SR6</spring-cloud.version>
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.coverage.exclusions>
+			**/*Application.java,
+			**/entity/*.java,
+			**/config/*.java
+		</sonar.coverage.exclusions>
+		<sonar.junit.reportPaths>
+			target/surefire-reports
+		</sonar.junit.reportPaths>
+		<sonar.maven.plugin.version>3.6.0.1398</sonar.maven.plugin.version>
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
@@ -74,10 +85,26 @@
 	</dependencies>
 
 	<build>
+		<finalName>${project.name}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>${sonar.maven.plugin.version}</version>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
